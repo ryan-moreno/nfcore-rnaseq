@@ -22,7 +22,7 @@ process QUALIMAP_RNASEQ {
     def args = task.ext.args   ?: ''
     prefix   = task.ext.prefix ?: "${meta.id}"
     def paired_end = meta.single_end ? '' : '-pe'
-    def memory     = task.memory.toGiga() + "G"
+    def avail_mem = task.memory.giga * 0.8
 
     def strandedness = 'non-strand-specific'
     if (meta.strandedness == 'forward') {
@@ -35,7 +35,7 @@ process QUALIMAP_RNASEQ {
     mkdir tmp
     export _JAVA_OPTIONS=-Djava.io.tmpdir=./tmp
     qualimap \\
-        --java-mem-size={$memory / 2} \\
+        --java-mem-size=${avail_mem}g \\
         rnaseq \\
         $args \\
         -bam $bam \\
