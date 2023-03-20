@@ -35,7 +35,7 @@ process QUALIMAP_RNASEQ {
     mkdir tmp
     export _JAVA_OPTIONS=-Djava.io.tmpdir=./tmp
     qualimap \\
-        --java-mem-size=$memory \\
+        --java-mem-size={$memory / 2} \\
         rnaseq \\
         $args \\
         -bam $bam \\
