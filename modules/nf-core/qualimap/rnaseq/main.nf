@@ -22,7 +22,7 @@ process QUALIMAP_RNASEQ {
     def args = task.ext.args   ?: ''
     prefix   = task.ext.prefix ?: "${meta.id}"
     def paired_end = meta.single_end ? '' : '-pe'
-    def avail_mem = task.memory.giga * 0.8
+    def avail_mem = (task.memory.giga * 0.8).intValue()
 
     def strandedness = 'non-strand-specific'
     if (meta.strandedness == 'forward') {
